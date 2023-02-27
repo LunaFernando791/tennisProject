@@ -49,15 +49,15 @@ class CalzadoController extends Controller
      */
     public function show(Calzado $calzado)
     {
-        //
+        return view('tennis/show-tennis', compact('calzado')); //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Calzado $calzado)
+    public function edit(Calzado $calzado) //se trata de mostrar un formulario que ya tengo en la base de datos y la quiero modificar, tenemos que ver las rutas y como estan armadas
     {
-        //
+        return view('tennis/edit-Tennis', compact('calzado'));//en los inputs se podemos agergar un value, en el value le ponemos la inforacion que estamos recuperando del elemento que estamos editando.
     }
 
     /**
@@ -65,7 +65,14 @@ class CalzadoController extends Controller
      */
     public function update(Request $request, Calzado $calzado)
     {
-        //
+        $request->validate([
+            'modelo'=>['required', 'string', 'max:255'],
+            'precio'=>['required'],
+        ]);
+        $calzado->modelo=$request->modelo;
+        $calzado->precio=$request->precio;
+        $calzado->save();
+        return redirect()->route('tennis.show', $calzado);
     }
 
     /**

@@ -18,4 +18,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('tennis', CalzadoController::class);
+Route::resource('tennis', CalzadoController::class)->parameters([
+    'tennis'=>'calzado'
+]);

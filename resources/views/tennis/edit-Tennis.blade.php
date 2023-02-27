@@ -2,10 +2,11 @@
 <html>
     <head></head>
     <body>
-        <h1>Agregar Nuevo Tennis</h1>
-        <form action="/tennis" method="POST">// route - 'tennis.store', $ten -
+        <h1>Editar Tennis</h1>
+        <form action="{{ route('tennis.update', $calzado)}}" method="POST">
         @csrf
-            <label for="modelo">Modelo<input type="text", name="modelo" id="modelo">
+        @method('PATCH')
+            <label for="modelo">Modelo<input type="text", name="modelo" id="modelo" value="{{$calzado->modelo}}">
             <br>
             @error('modelo')
                 <h5>{{ $message }}</h5>
@@ -13,7 +14,7 @@
             <br>
             </label>
             <label for="precio">Precio
-                <input type="text" name="precio" id="precio">
+                <input type="text" name="precio" id="precio" value="{{$calzado->precio}}">
                 <br>
             @error('precio')
                 <h5>{{ $message }}</h5>
