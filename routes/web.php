@@ -21,3 +21,13 @@ Route::get('/', function () {
 Route::resource('tennis', CalzadoController::class)->parameters([
     'tennis'=>'calzado'
 ]);
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
