@@ -80,6 +80,7 @@ class CalzadoController extends Controller
      */
     public function destroy(Calzado $calzado)
     {
-        //
+        $calzado->delete();
+        return redirect()->route('tennis.index');
     }
 }
