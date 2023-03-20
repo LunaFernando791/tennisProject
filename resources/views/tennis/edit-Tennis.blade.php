@@ -1,8 +1,5 @@
-<!DOCTYPE html>
-<html>
-    <head></head>
-    <body>
-        <h1>Editar Tennis</h1>
+<x-layout>
+        <x-slot:tittle>Editar Tennis</x-slot:tittle>
         <form action="{{ route('tennis.update', $calzado)}}" method="POST">
         @csrf
         @method('PATCH')
@@ -25,5 +22,4 @@
                 <button type="submit" value="Enviar">ENVIAR</button>
             </label>
         </form>
-    </body>
-</html>
+</x-layout>

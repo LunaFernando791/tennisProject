@@ -1,8 +1,6 @@
-<!DOCTYPE html>
-<html>
-    <head></head>
-    <body>
-        <h1>Tennis</h1>
+
+    <x-layout>
+        <x-slot:tittle>Lista de tennis</x-slot:tittle>
         <a href="/tennis/create">Agregar Tennis</a>
         <ul>
         @foreach ( $tennis as $ten)
@@ -11,5 +9,4 @@
             <a href="/tennis/{{$ten->id}}/edit">Editar producto</a>
         @endforeach
         </ul>
-    </body>
-</html>
+    </x-layout>

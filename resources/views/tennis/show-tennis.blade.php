@@ -1,8 +1,5 @@
-<!DOCTYPE html>
-<html>
-    <head></head>
-    <body>
-        <h1>Detalle del producto</h1>
+<x-layout>
+        <x-slot:tittle>Detalle del producto</x-slot:tittle>
         <h3>{{$calzado->modelo}}</h3>
         <h3>{{$calzado->precio}}</h3>
         <br>
@@ -11,5 +8,4 @@
             @method('DELETE')
             <button type="submit">Eliminar</button>
         </form>
-    </body>
-</html>
+</x-layout>

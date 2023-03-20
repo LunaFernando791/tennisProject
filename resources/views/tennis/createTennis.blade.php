@@ -1,8 +1,5 @@
-<!DOCTYPE html>
-<html>
-    <head></head>
-    <body>
-        <h1>Agregar Nuevo Tennis</h1>
+<x-layout>
+        <x-slot:tittle>Agregar Nuevo Tennis</x-slot:tittle>
         <form action="/tennis" method="POST">
         @csrf
             <label for="modelo">Modelo<input type="text", name="modelo" id="modelo" value="{{old('modelo')}}">
@@ -24,6 +21,4 @@
                 <button type="submit" value="Enviar">ENVIAR</button>
             </label>
         </form>
-    </body>
-</html>
-<!-- route - 'tennis.store', $ten -->
+</x-layout>
