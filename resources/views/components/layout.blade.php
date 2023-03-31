@@ -1,257 +1,897 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      {{ $tittle }}
-    </title>
+    <meta charset="utf-8" />
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $tittle }}</title>
     <link
-      rel="shortcut icon"
-      href="assets/images/favicon.png"
-      type="image/x-icon"
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap"
+      rel="stylesheet"
     />
-    <link rel="stylesheet" href="/animate.css" />
-    <link rel="stylesheet" href="/tailwind.css" />
-
-    <!-- ==== WOW JS ==== -->
-    <script src="wow.min.js"></script>
-    <script>
-      new WOW().init();
-    </script>
+    <link rel="stylesheet" href="/css/tailwind.css" />
+    <link rel="stylesheet" href="/css/styles.css"/>
+    <script src="https://cdn.jsdelivr.net/gh/alpine-collective/alpine-magic-helpers@0.5.x/dist/component.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.min.js" defer></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
   </head>
   <body>
-    <!-- ====== Navbar Section Start -->
-    <div
-      class="ud-header absolute top-0 left-0 z-40 flex w-full items-center bg-transparent"
-    >
-      <div class="container">
-        <div class="relative -mx-4 flex items-center justify-between">
-          <div class="w-60 max-w-full px-4">
-            <a href="index.html" class="navbar-logo block w-full py-5">
-              <img
-                src="images/logo/logo-white.svg"
-                alt="logo"
-                class="header-logo w-full"
-              />
-            </a>
-          </div>
-          <div class="flex w-full items-center justify-between px-4">
-            <div>
+    <div x-data="setup()" x-init="$refs.loading.classList.add('hidden'); setColors(color);" :class="{ 'dark': isDark}">
+      <div class="flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light">
+        <!-- Loading screen -->
+        <div
+          x-ref="loading"
+          class="fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-white bg-primary-darker"
+        >
+          Loading.....
+        </div>
+        <div class="flex flex-col flex-1 min-h-screen overflow-x-hidden overflow-y-auto">
+          <!-- Navbar -->
+          <header class="relative flex-shrink-0 bg-white dark:bg-darker">
+            <div class="flex items-center justify-between p-2 border-b dark:border-primary-darker">
+              <!-- Mobile menu button -->
               <button
-                id="navbarToggler"
-                class="absolute right-4 top-1/2 block -translate-y-1/2 rounded-lg px-3 py-[6px] ring-primary focus:ring-2 lg:hidden"
+                @click="isMobileMainMenuOpen = !isMobileMainMenuOpen"
+                class="p-1 transition-colors duration-200 rounded-md text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark md:hidden focus:outline-none focus:ring"
               >
-                <span
-                  class="relative my-[6px] block h-[2px] w-[30px] bg-white"
-                ></span>
-                <span
-                  class="relative my-[6px] block h-[2px] w-[30px] bg-white"
-                ></span>
-                <span
-                  class="relative my-[6px] block h-[2px] w-[30px] bg-white"
-                ></span>
+                <span class="sr-only">Open main manu</span>
+                <span aria-hidden="true">
+                  <svg
+                    class="w-8 h-8"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                </span>
               </button>
-              <nav
-                id="navbarCollapse"
-                class="absolute right-4 top-full hidden w-full max-w-[250px] rounded-lg bg-white py-5 shadow-lg lg:static lg:block lg:w-full lg:max-w-full lg:bg-transparent lg:py-0 lg:px-4 lg:shadow-none xl:px-6"
+
+              <!-- Brand -->
+              <nav aria-label="Secondary" class="hidden space-x-2 md:flex md:items-center">
+              <a
+                href="#"
+                class="inline-block text-2xl font-bold tracking-wider uppercase text-primary-dark dark:text-light"
               >
-                <ul class="blcok lg:flex">
-                  <li class="group relative">
-                    <a
-                      href="#home"
-                      class="ud-menu-scroll mx-8 flex py-2 text-base text-dark group-hover:text-primary lg:mr-0 lg:inline-flex lg:py-6 lg:px-0 lg:text-white lg:group-hover:text-white lg:group-hover:opacity-70"
+                ZHOPSHOEZ
+              </a>
+              <a href="/dashboard" class="inline-flex text-bold text-1xl  text-primary-dark dark:text-light">
+                Dashboard
+              </a>
+              <a href="/tennis" class="inline-flex text-bold text-1xl  text-primary-dark dark:text-light">
+                Lista de calzado
+              </a>
+              </nav>
+              <!-- Mobile sub menu button -->
+              <button
+                @click="isMobileSubMenuOpen = !isMobileSubMenuOpen"
+                class="p-1 transition-colors duration-200 rounded-md text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark md:hidden focus:outline-none focus:ring"
+              >
+                <span class="sr-only">Open sub manu</span>
+                <span aria-hidden="true">
+                  <svg
+                    class="w-8 h-8"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+                    />
+                  </svg>
+                </span>
+              </button>
+
+              <!-- Desktop Right buttons -->
+              <nav aria-label="Secondary" class="hidden space-x-2 md:flex md:items-center">
+                <!-- Notification button -->
+                <button
+                  @click="openNotificationsPanel"
+                  class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker"
+                >
+                  <span class="sr-only">Open Notification panel</span>
+                  <svg
+                    class="w-7 h-7"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                    />
+                  </svg>
+                </button>
+                <!-- Search button -->
+                <button
+                  @click="openSearchPanel"
+                  class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker"
+                >
+                  <span class="sr-only">Open search panel</span>
+                  <svg
+                    class="w-7 h-7"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                </button>
+
+                <!-- Settings button -->
+                <button
+                  @click="openSettingsPanel"
+                  class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker"
+                >
+                  <span class="sr-only">Open settings panel</span>
+                  <svg
+                    class="w-7 h-7"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                    />
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                </button>
+
+                <!-- User avatar button -->
+                <div class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker">
+                    @if (Route::has('login'))
+                        @auth
+                        <div class="ml-2 relative">
+                            <x-dropdown align="right" width="48">
+                                <x-slot name="trigger">
+                                    @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
+                                        <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
+                                            <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                                        </button>
+                                    @else
+                                        <span class="inline-flex rounded-md">
+                                            <button type="button" class="text-sm px-4 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker">
+                                                {{ Auth::user()->name }}
+                                            </button>
+                                        </span>
+                                    @endif
+                                </x-slot>
+                                <x-slot name="content">
+                                    <!-- Account Management -->
+                                    <div class="block px-4 py-2 text-xs text-gray-400">
+                                        {{ __('Manage Account') }}
+                                    </div>
+                                    <x-dropdown-link href="{{ route('profile.show') }}">
+                                        {{ __('Profile') }}
+                                    </x-dropdown-link>
+
+                                    @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
+                                        <x-dropdown-link href="{{ route('api-tokens.index') }}">
+                                            {{ __('API Tokens') }}
+                                        </x-dropdown-link>
+                                    @endif
+
+                                    <div class="border-t border-gray-200 dark:border-gray-600"></div>
+
+                                    <!-- Authentication -->
+                                    <form method="POST" action="{{ route('logout') }}" x-data>
+                                        @csrf
+
+                                        <x-dropdown-link href="{{ route('logout') }}"
+                                                 @click.prevent="$root.submit();">
+                                            {{ __('Log Out') }}
+                                        </x-dropdown-link>
+                                    </form>
+                                </x-slot>
+                            </x-dropdown>
+                        </div>
+                        @else
+                            <a href="{{ route('login') }}" class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker">Login in</a>
+                            @if(Route::has('register'))
+                                <a href="{{ route('register') }}" class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker">Register</a>
+                            @endif
+                        @endauth
+                    @endif
+                </div>
+              </nav>
+              <!-- Mobile sub menu -->
+              <nav
+                x-transition:enter="transition duration-200 ease-in-out transform sm:duration-500"
+                x-transition:enter-start="-translate-y-full opacity-0"
+                x-transition:enter-end="translate-y-0 opacity-100"
+                x-transition:leave="transition duration-300 ease-in-out transform sm:duration-500"
+                x-transition:leave-start="translate-y-0 opacity-100"
+                x-transition:leave-end="-translate-y-full opacity-0"
+                x-show="isMobileSubMenuOpen"
+                @click.away="isMobileSubMenuOpen = false"
+                class="absolute flex items-center p-4 bg-white rounded-md shadow-lg dark:bg-darker top-16 inset-x-4 md:hidden"
+                aria-label="Secondary"
+              >
+                <div class="space-x-2">
+
+                  <!-- Notification button -->
+                  <button
+                    @click="openNotificationsPanel(); $nextTick(() => { isMobileSubMenuOpen = false })"
+                    class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker"
+                  >
+                    <span class="sr-only">Open notifications panel</span>
+                    <svg
+                      class="w-7 h-7"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      aria-hidden="true"
                     >
-                      Home
-                    </a>
-                  </li>
-                  <li class="group relative">
-                    <a
-                      href="#about"
-                      class="ud-menu-scroll mx-8 flex py-2 text-base text-dark group-hover:text-primary lg:mr-0 lg:ml-7 lg:inline-flex lg:py-6 lg:px-0 lg:text-white lg:group-hover:text-white lg:group-hover:opacity-70 xl:ml-12"
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                      />
+                    </svg>
+                  </button>
+
+                  <!-- Search button -->
+                  <button
+                    @click="openSearchPanel(); $nextTick(() => { $refs.searchInput.focus(); setTimeout(() => {isMobileSubMenuOpen= false}, 100) })"
+                    class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker"
+                  >
+                    <span class="sr-only">Open search panel</span>
+                    <svg
+                      class="w-7 h-7"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      aria-hidden="true"
                     >
-                      About
-                    </a>
-                  </li>
-                  <li class="group relative">
-                    <a
-                      href="#pricing"
-                      class="ud-menu-scroll mx-8 flex py-2 text-base text-dark group-hover:text-primary lg:mr-0 lg:ml-7 lg:inline-flex lg:py-6 lg:px-0 lg:text-white lg:group-hover:text-white lg:group-hover:opacity-70 xl:ml-12"
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                      />
+                    </svg>
+                  </button>
+
+                  <!-- Settings button -->
+                  <button
+                    @click="openSettingsPanel(); $nextTick(() => { isMobileSubMenuOpen = false })"
+                    class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker"
+                  >
+                    <span class="sr-only">Open settings panel</span>
+                    <svg
+                      class="w-7 h-7"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
                     >
-                      Pricing
-                    </a>
-                  </li>
-                  <li class="group relative">
-                    <a
-                      href="#team"
-                      class="ud-menu-scroll mx-8 flex py-2 text-base text-dark group-hover:text-primary lg:mr-0 lg:ml-7 lg:inline-flex lg:py-6 lg:px-0 lg:text-white lg:group-hover:text-white lg:group-hover:opacity-70 xl:ml-12"
-                    >
-                      Team
-                    </a>
-                  </li>
-                  <li class="group relative">
-                    <a
-                      href="#contact"
-                      class="ud-menu-scroll mx-8 flex py-2 text-base text-dark group-hover:text-primary lg:mr-0 lg:ml-7 lg:inline-flex lg:py-6 lg:px-0 lg:text-white lg:group-hover:text-white lg:group-hover:opacity-70 xl:ml-12"
-                    >
-                      Contact
-                    </a>
-                  </li>
-                  <li class="submenu-item group relative">
-                    <a
-                      href="javascript:void(0)"
-                      class="relative mx-8 flex py-2 text-base text-dark after:absolute after:right-1 after:top-1/2 after:mt-[-2px] after:h-2 after:w-2 after:-translate-y-1/2 after:rotate-45 after:border-b-2 after:border-r-2 after:border-current group-hover:text-primary lg:mr-0 lg:ml-8 lg:inline-flex lg:py-6 lg:pl-0 lg:pr-4 lg:text-white lg:after:right-0 lg:group-hover:text-white lg:group-hover:opacity-70 xl:ml-12"
-                    >
-                      Pages
-                    </a>
-                    <div
-                      class="submenu relative top-full left-0 hidden w-[250px] rounded-sm bg-white p-4 transition-[top] duration-300 group-hover:opacity-100 lg:invisible lg:absolute lg:top-[110%] lg:block lg:opacity-0 lg:shadow-lg lg:group-hover:visible lg:group-hover:top-full"
-                    >
-                      <a
-                        href="about.html"
-                        class="block rounded py-[10px] px-4 text-sm text-body-color hover:text-primary"
-                      >
-                        About Page
-                      </a>
-                      <a
-                        href="pricing.html"
-                        class="block rounded py-[10px] px-4 text-sm text-body-color hover:text-primary"
-                      >
-                        Pricing Page
-                      </a>
-                      <a
-                        href="contact.html"
-                        class="block rounded py-[10px] px-4 text-sm text-body-color hover:text-primary"
-                      >
-                        Contact Page
-                      </a>
-                      <a
-                        href="blog-grids.html"
-                        class="block rounded py-[10px] px-4 text-sm text-body-color hover:text-primary"
-                      >
-                        Blog Grid Page
-                      </a>
-                      <a
-                        href="blog-details.html"
-                        class="block rounded py-[10px] px-4 text-sm text-body-color hover:text-primary"
-                      >
-                        Blog Details Page
-                      </a>
-                      <a
-                        href="signup.html"
-                        class="block rounded py-[10px] px-4 text-sm text-body-color hover:text-primary"
-                      >
-                        Sign Up Page
-                      </a>
-                      <a
-                        href="signin.html"
-                        class="block rounded py-[10px] px-4 text-sm text-body-color hover:text-primary"
-                      >
-                        Sign In Page
-                      </a>
-                      <a
-                        href="404.html"
-                        class="block rounded py-[10px] px-4 text-sm text-body-color hover:text-primary"
-                      >
-                        404 Page
-                      </a>
-                    </div>
-                  </li>
-                </ul>
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                      />
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <!-- User avatar button -->
+                <div class="loginButton">
+                    @if (Route::has('login'))
+                        @auth
+                        <div class="ml-3 relative">
+                            <x-dropdown align="right" width="48">
+                                <x-slot name="trigger">
+                                    @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
+                                        <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
+                                            <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                                        </button>
+                                    @else
+                                        <span class="inline-flex rounded-md">
+                                            <button type="button" class="inline-flex items-center px-3 py-2 text-sm leading-4 font-medium rounded-md text-primary-lighter dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150">
+                                                {{ Auth::user()->name }}
+
+                                                <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                                </svg>
+                                            </button>
+                                        </span>
+                                    @endif
+                                </x-slot>
+                                <x-slot name="content">
+                                    <!-- Account Management -->
+                                    <div class="block px-4 py-2 text-xs text-gray-400">
+                                        {{ __('Manage Account') }}
+                                    </div>
+
+                                    <x-dropdown-link href="{{ route('profile.show') }}">
+                                        {{ __('Profile') }}
+                                    </x-dropdown-link>
+
+                                    @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
+                                        <x-dropdown-link href="{{ route('api-tokens.index') }}">
+                                            {{ __('API Tokens') }}
+                                        </x-dropdown-link>
+                                    @endif
+
+                                    <div class="border-t border-gray-200 dark:border-gray-600"></div>
+
+                                    <!-- Authentication -->
+                                    <form method="POST" action="{{ route('logout') }}" x-data>
+                                        @csrf
+
+                                        <x-dropdown-link href="{{ route('logout') }}"
+                                                 @click.prevent="$root.submit();">
+                                            {{ __('Log Out') }}
+                                        </x-dropdown-link>
+                                    </form>
+                                </x-slot>
+                            </x-dropdown>
+                        </div>
+                        @else
+                            <a href="{{ route('login') }}" class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker">Login in</a>
+                            @if(Route::has('register'))
+                                <a href="{{ route('register') }}" class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker">Register</a>
+                            @endif
+                        @endauth
+                    @endif
+                </div>
               </nav>
             </div>
-            <div class="hidden justify-end pr-16 sm:flex lg:pr-0">
-            @if (Route::has('login'))
-                @auth
-                <a href="{{ url('/dashboard') }}" class="font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
-                @else
-                    <a href="{{ route('login') }}" class="loginBtn py-3 px-7 text-base font-medium text-white hover:opacity-70">Login in</a>
-                    @if(Route::has('register'))
-                        <a href="{{ route('register') }}" class="signUpBtn rounded-lg bg-white bg-opacity-20 py-3 px-6 text-base font-medium text-white duration-300 ease-in-out hover:bg-opacity-100 hover:text-dark">Register</a>
-                    @endif
-                @endauth
-            @endif
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- ====== Navbar Section End -->
-    <div
-      id="home"
-      class="relative overflow-hidden bg-primary pt-[120px] md:pt-[130px] lg:pt-[160px]"
-    >
-      <div class="container">
-        <div class="-mx-4 flex flex-wrap items-center">
-          <div class="w-full px-4">
+            <!-- Mobile main manu -->
             <div
-              class="hero-content wow fadeInUp mx-auto max-w-[780px] text-center"
-              data-wow-delay=".2s"
+              class="border-b md:hidden dark:border-primary-darker"
+              x-show="isMobileMainMenuOpen"
+              @click.away="isMobileMainMenuOpen = false"
             >
-              <h1
-                class="mb-8 text-3xl font-bold leading-snug text-white sm:text-4xl sm:leading-snug md:text-[45px] md:leading-snug"
-              >
-                {{ $tittle }}
-              </h1>
+              <nav aria-label="Main" class="px-2 py-4 space-y-2">
+                <!-- Dashboards links -->
+                <div x-data="{ isActive: false, open: false}">
+                  <!-- active & hover classes 'bg-primary-100 dark:bg-primary' -->
+                  <a
+                    href="#"
+                    @click="$event.preventDefault(); open = !open"
+                    class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+                    :class="{'bg-primary-100 dark:bg-primary': isActive || open}"
+                    role="button"
+                    aria-haspopup="true"
+                    :aria-expanded="(open || isActive) ? 'true' : 'false'"
+                  >
+                    <span aria-hidden="true">
+                      <svg
+                        class="w-5 h-5"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                        />
+                      </svg>
+                    </span>
+                    <span class="ml-2 text-sm"> Dashboards </span>
+                    <span class="ml-auto" aria-hidden="true">
+                      <!-- active class 'rotate-180' -->
+                      <svg
+                        class="w-4 h-4 transition-transform transform"
+                        :class="{ 'rotate-180': open }"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </span>
+                  </a>
+                  <div role="menu" x-show="open" class="mt-2 space-y-2 px-7" aria-label="Dashboards">
+                    <!-- active & hover classes 'text-gray-700 dark:text-light' -->
+                    <!-- inActive classes 'text-gray-400 dark:text-gray-400' -->
+                    <a
+                      href="/dashboard"
+                      role="menuitem"
+                      class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700"
+                    >
+                      Dashboard Usuario
+                    </a>
+                    <a
+                      href="/tennis"
+                      role="menuitem"
+                      class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
+                    >
+                      Lista calzado
+                    </a>
+                  </div>
+                </div>
+              </nav>
             </div>
+          </header>
+
+          <!-- Main content -->
+          <div class="items-center justify-center flex-1 h-full p-4">
+            <main>
+              <h1 class="title">{{ $tittle }}</h1>
+              {{ $slot }}
+            </main>
           </div>
         </div>
-      </div>
-    </div>
-    <section class="pt-20 pb-8 lg:pt-[120px] lg:pb-[70px]">
-        <div class="container">
-          <div class="-mx-4 flex flex-wrap">
-            <div class="w-full px-4">
-              <div class="mb-12 max-w-[620px] lg:mb-20">
-                {{ $slot }}
+
+        <!-- Panels -->
+
+        <!-- Settings Panel -->
+        <!-- Backdrop -->
+        <div
+          x-transition:enter="transition duration-300 ease-in-out"
+          x-transition:enter-start="opacity-0"
+          x-transition:enter-end="opacity-100"
+          x-transition:leave="transition duration-300 ease-in-out"
+          x-transition:leave-start="opacity-100"
+          x-transition:leave-end="opacity-0"
+          x-show="isSettingsPanelOpen"
+          @click="isSettingsPanelOpen = false"
+          class="fixed inset-0 z-10 bg-primary-darker"
+          style="opacity: 0.5"
+          aria-hidden="true"
+        ></div>
+        <!-- Panel -->
+        <section
+          x-transition:enter="transition duration-300 ease-in-out transform sm:duration-500"
+          x-transition:enter-start="translate-x-full"
+          x-transition:enter-end="translate-x-0"
+          x-transition:leave="transition duration-300 ease-in-out transform sm:duration-500"
+          x-transition:leave-start="translate-x-0"
+          x-transition:leave-end="translate-x-full"
+          x-ref="settingsPanel"
+          tabindex="-1"
+          x-show="isSettingsPanelOpen"
+          @keydown.escape="isSettingsPanelOpen = false"
+          class="fixed inset-y-0 right-0 z-20 w-full max-w-xs bg-white shadow-xl dark:bg-darker dark:text-light sm:max-w-md focus:outline-none"
+          aria-labelledby="settinsPanelLabel"
+        >
+          <div class="absolute left-0 p-2 transform -translate-x-full">
+            <!-- Close button -->
+            <button
+              @click="isSettingsPanelOpen = false"
+              class="p-2 text-white rounded-md focus:outline-none focus:ring"
+            >
+              <svg
+                class="w-5 h-5"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          <!-- Panel content -->
+          <div class="flex flex-col h-screen">
+            <!-- Panel header -->
+            <div
+              class="flex flex-col items-center justify-center flex-shrink-0 px-4 py-8 space-y-4 border-b dark:border-primary-dark"
+            >
+              <span aria-hidden="true" class="text-gray-500 dark:text-primary">
+                <svg
+                  class="w-8 h-8"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+                  />
+                </svg>
+              </span>
+              <h2 id="settinsPanelLabel" class="text-xl font-medium text-gray-500 dark:text-light">Settings</h2>
+            </div>
+            <!-- Content -->
+            <div class="flex-1 overflow-hidden hover:overflow-y-auto">
+              <!-- Theme -->
+              <div class="p-4 space-y-4 md:p-8">
+                <h6 class="text-lg font-medium text-gray-400 dark:text-light">Mode</h6>
+                <div class="flex items-center space-x-8">
+                  <!-- Light button -->
+                  <button
+                    @click="setLightTheme"
+                    class="flex items-center justify-center px-4 py-2 space-x-4 transition-colors border rounded-md hover:text-gray-900 hover:border-gray-900 dark:border-primary dark:hover:text-primary-100 dark:hover:border-primary-light focus:outline-none focus:ring focus:ring-primary-lighter focus:ring-offset-2 dark:focus:ring-offset-dark dark:focus:ring-primary-dark"
+                    :class="{ 'border-gray-900 text-gray-900 dark:border-primary-light dark:text-primary-100': !isDark, 'text-gray-500 dark:text-primary-light': isDark }"
+                  >
+                    <span>
+                      <svg
+                        class="w-6 h-6"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                        />
+                      </svg>
+                    </span>
+                    <span>Light</span>
+                  </button>
+
+                  <!-- Dark button -->
+                  <button
+                    @click="setDarkTheme"
+                    class="flex items-center justify-center px-4 py-2 space-x-4 transition-colors border rounded-md hover:text-gray-900 hover:border-gray-900 dark:border-primary dark:hover:text-primary-100 dark:hover:border-primary-light focus:outline-none focus:ring focus:ring-primary-lighter focus:ring-offset-2 dark:focus:ring-offset-dark dark:focus:ring-primary-dark"
+                    :class="{ 'border-gray-900 text-gray-900 dark:border-primary-light dark:text-primary-100': isDark, 'text-gray-500 dark:text-primary-light': !isDark }"
+                  >
+                    <span>
+                      <svg
+                        class="w-6 h-6"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+                        />
+                      </svg>
+                    </span>
+                    <span>Dark</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Colors -->
+              <div class="p-4 space-y-4 md:p-8">
+                <h6 class="text-lg font-medium text-gray-400 dark:text-light">Colors</h6>
+                <div>
+                  <button
+                    @click="setColors('cyan')"
+                    class="w-10 h-10 rounded-full"
+                    style="background-color: var(--color-cyan)"
+                  ></button>
+                  <button
+                    @click="setColors('teal')"
+                    class="w-10 h-10 rounded-full"
+                    style="background-color: var(--color-teal)"
+                  ></button>
+                  <button
+                    @click="setColors('green')"
+                    class="w-10 h-10 rounded-full"
+                    style="background-color: var(--color-green)"
+                  ></button>
+                  <button
+                    @click="setColors('fuchsia')"
+                    class="w-10 h-10 rounded-full"
+                    style="background-color: var(--color-fuchsia)"
+                  ></button>
+                  <button
+                    @click="setColors('blue')"
+                    class="w-10 h-10 rounded-full"
+                    style="background-color: var(--color-blue)"
+                  ></button>
+                  <button
+                    @click="setColors('violet')"
+                    class="w-10 h-10 rounded-full"
+                    style="background-color: var(--color-violet)"
+                  ></button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-    <script src="main.js"></script>
+        </section>
+        <!-- Backdrop -->
+        <div
+          x-transition:enter="transition duration-300 ease-in-out"
+          x-transition:enter-start="opacity-0"
+          x-transition:enter-end="opacity-100"
+          x-transition:leave="transition duration-300 ease-in-out"
+          x-transition:leave-start="opacity-100"
+          x-transition:leave-end="opacity-0"
+          x-show="isNotificationsPanelOpen"
+          @click="isNotificationsPanelOpen = false"
+          class="fixed inset-0 z-10 bg-primary-darker"
+          style="opacity: 0.5"
+          aria-hidden="true"
+        ></div>
+        <!-- Panel -->
+        <section
+          x-transition:enter="transition duration-300 ease-in-out transform sm:duration-500"
+          x-transition:enter-start="-translate-x-full"
+          x-transition:enter-end="translate-x-0"
+          x-transition:leave="transition duration-300 ease-in-out transform sm:duration-500"
+          x-transition:leave-start="translate-x-0"
+          x-transition:leave-end="-translate-x-full"
+          x-ref="notificationsPanel"
+          x-show="isNotificationsPanelOpen"
+          @keydown.escape="isNotificationsPanelOpen = false"
+          tabindex="-1"
+          aria-labelledby="notificationPanelLabel"
+          class="fixed inset-y-0 z-20 w-full max-w-xs bg-white dark:bg-darker dark:text-light sm:max-w-md focus:outline-none"
+        >
+          <div class="absolute right-0 p-2 transform translate-x-full">
+            <!-- Close button -->
+            <button
+              @click="isNotificationsPanelOpen = false"
+              class="p-2 text-white rounded-md focus:outline-none focus:ring"
+            >
+              <svg
+                class="w-5 h-5"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          <div class="flex flex-col h-screen" x-data="{ activeTabe: 'action' }">
+            <!-- Panel header -->
+            <div class="flex-shrink-0">
+              <div class="flex items-center justify-between px-4 pt-4 border-b dark:border-primary-darker">
+                <h2 id="notificationPanelLabel" class="pb-4 font-semibold">Notifications</h2>
+                <div class="space-x-2">
+                  <button
+                    @click.prevent="activeTabe = 'action'"
+                    class="px-px pb-4 transition-all duration-200 transform translate-y-px border-b focus:outline-none"
+                    :class="{'border-primary-dark dark:border-primary': activeTabe == 'action', 'border-transparent': activeTabe != 'action'}"
+                  >
+                    Action
+                  </button>
+                  <button
+                    @click.prevent="activeTabe = 'user'"
+                    class="px-px pb-4 transition-all duration-200 transform translate-y-px border-b focus:outline-none"
+                    :class="{'border-primary-dark dark:border-primary': activeTabe == 'user', 'border-transparent': activeTabe != 'user'}"
+                  >
+                    User
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel content (tabs) -->
+            <div class="flex-1 pt-4 overflow-y-hidden hover:overflow-y-auto">
+              <!-- Action tab -->
+              <div class="space-y-4" x-show.transition.in="activeTabe == 'action'">
+                <p class="px-4">Action tab content</p>
+                <!--  -->
+                <!-- Action tab content -->
+                <!--  -->
+              </div>
+
+              <!-- User tab -->
+              <div class="space-y-4" x-show.transition.in="activeTabe == 'user'">
+                <p class="px-4">User tab content</p>
+                <!--  -->
+                <!-- User tab content -->
+                <!--  -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Search panel -->
+        <!-- Backdrop -->
+        <div
+          x-transition:enter="transition duration-300 ease-in-out"
+          x-transition:enter-start="opacity-0"
+          x-transition:enter-end="opacity-100"
+          x-transition:leave="transition duration-300 ease-in-out"
+          x-transition:leave-start="opacity-100"
+          x-transition:leave-end="opacity-0"
+          x-show="isSearchPanelOpen"
+          @click="isSearchPanelOpen = false"
+          class="fixed inset-0 z-10 bg-primary-darker"
+          style="opacity: 0.5"
+          aria-hidden="ture"
+        ></div>
+        <!-- Panel -->
+        <section
+          x-transition:enter="transition duration-300 ease-in-out transform sm:duration-500"
+          x-transition:enter-start="-translate-x-full"
+          x-transition:enter-end="translate-x-0"
+          x-transition:leave="transition duration-300 ease-in-out transform sm:duration-500"
+          x-transition:leave-start="translate-x-0"
+          x-transition:leave-end="-translate-x-full"
+          x-show="isSearchPanelOpen"
+          @keydown.escape="isSearchPanelOpen = false"
+          class="fixed inset-y-0 z-20 w-full max-w-xs bg-white shadow-xl dark:bg-darker dark:text-light sm:max-w-md focus:outline-none"
+        >
+          <div class="absolute right-0 p-2 transform translate-x-full">
+            <!-- Close button -->
+            <button @click="isSearchPanelOpen = false" class="p-2 text-white rounded-md focus:outline-none focus:ring">
+              <svg
+                class="w-5 h-5"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <h2 class="sr-only">Search panel</h2>
+          <!-- Panel content -->
+          <div class="flex flex-col h-screen">
+            <!-- Panel header (Search input) -->
+            <div
+              class="relative flex-shrink-0 px-4 py-8 text-gray-400 border-b dark:border-primary-darker dark:focus-within:text-light focus-within:text-gray-700"
+            >
+              <span class="absolute inset-y-0 inline-flex items-center px-4">
+                <svg
+                  class="w-5 h-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+              </span>
+              <input
+                x-ref="searchInput"
+                type="text"
+                class="w-full py-2 pl-10 pr-4 border rounded-full dark:bg-dark dark:border-transparent dark:text-light focus:outline-none focus:ring"
+                placeholder="Search..."
+              />
+            </div>
+
+            <!-- Panel content (Search result) -->
+            <div class="flex-1 px-4 pb-4 space-y-4 overflow-y-hidden h hover:overflow-y-auto">
+              <h3 class="py-2 text-sm font-semibold text-gray-600 dark:text-light">History</h3>
+              <p class="px=4">Search resault</p>
+              <!--  -->
+              <!-- Search content -->
+              <!--  -->
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <!-- All javascript code in this project for now is just for demo DON'T RELY ON IT  -->
     <script>
-      // ==== for menu scroll
-      const pageLink = document.querySelectorAll(".ud-menu-scroll");
-
-      pageLink.forEach((elem) => {
-        elem.addEventListener("click", (e) => {
-          e.preventDefault();
-          document.querySelector(elem.getAttribute("href")).scrollIntoView({
-            behavior: "smooth",
-            offsetTop: 1 - 60,
-          });
-        });
-      });
-
-      // section menu active
-      function onScroll(event) {
-        const sections = document.querySelectorAll(".ud-menu-scroll");
-        const scrollPos =
-          window.pageYOffset ||
-          document.documentElement.scrollTop ||
-          document.body.scrollTop;
-
-        for (let i = 0; i < sections.length; i++) {
-          const currLink = sections[i];
-          const val = currLink.getAttribute("href");
-          const refElement = document.querySelector(val);
-          const scrollTopMinus = scrollPos + 73;
-          if (
-            refElement.offsetTop <= scrollTopMinus &&
-            refElement.offsetTop + refElement.offsetHeight > scrollTopMinus
-          ) {
-            document
-              .querySelector(".ud-menu-scroll")
-              .classList.remove("active");
-            currLink.classList.add("active");
-          } else {
-            currLink.classList.remove("active");
+      const setup = () => {
+        const getTheme = () => {
+          if (window.localStorage.getItem('dark')) {
+            return JSON.parse(window.localStorage.getItem('dark'))
           }
+          return !!window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        }
+
+        const setTheme = (value) => {
+          window.localStorage.setItem('dark', value)
+        }
+
+        const getColor = () => {
+          if (window.localStorage.getItem('color')) {
+            return window.localStorage.getItem('color')
+          }
+          return 'cyan'
+        }
+
+        const setColors = (color) => {
+          const root = document.documentElement
+          root.style.setProperty('--color-primary', `var(--color-${color})`)
+          root.style.setProperty('--color-primary-50', `var(--color-${color}-50)`)
+          root.style.setProperty('--color-primary-100', `var(--color-${color}-100)`)
+          root.style.setProperty('--color-primary-light', `var(--color-${color}-light)`)
+          root.style.setProperty('--color-primary-lighter', `var(--color-${color}-lighter)`)
+          root.style.setProperty('--color-primary-dark', `var(--color-${color}-dark)`)
+          root.style.setProperty('--color-primary-darker', `var(--color-${color}-darker)`)
+          this.selectedColor = color
+          window.localStorage.setItem('color', color)
+        }
+
+        return {
+          loading: true,
+          isDark: getTheme(),
+          color: getColor(),
+          selectedColor: 'cyan',
+          toggleTheme() {
+            this.isDark = !this.isDark
+            setTheme(this.isDark)
+          },
+          setLightTheme() {
+            this.isDark = false
+            setTheme(this.isDark)
+          },
+          setDarkTheme() {
+            this.isDark = true
+            setTheme(this.isDark)
+          },
+          setColors,
+          toggleSidbarMenu() {
+            this.isSidebarOpen = !this.isSidebarOpen
+          },
+          isSettingsPanelOpen: false,
+          openSettingsPanel() {
+            this.isSettingsPanelOpen = true
+            this.$nextTick(() => {
+              this.$refs.settingsPanel.focus()
+            })
+          },
+          isNotificationsPanelOpen: false,
+          openNotificationsPanel() {
+            this.isNotificationsPanelOpen = true
+            this.$nextTick(() => {
+              this.$refs.notificationsPanel.focus()
+            })
+          },
+          isSearchPanelOpen: false,
+          openSearchPanel() {
+            this.isSearchPanelOpen = true
+            this.$nextTick(() => {
+              this.$refs.searchInput.focus()
+            })
+          },
+          isMobileSubMenuOpen: false,
+          openMobileSubMenu() {
+            this.isMobileSubMenuOpen = true
+            this.$nextTick(() => {
+              this.$refs.mobileSubMenu.focus()
+            })
+          },
+          isMobileMainMenuOpen: false,
+          openMobileMainMenu() {
+            this.isMobileMainMenuOpen = true
+            this.$nextTick(() => {
+              this.$refs.mobileMainMenu.focus()
+            })
+          },
         }
       }
-
-      window.document.addEventListener("scroll", onScroll);
     </script>
   </body>
+</html>

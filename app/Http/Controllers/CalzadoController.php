@@ -32,13 +32,17 @@ class CalzadoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'modelo'=>['required', 'string', 'max:255'],
+            'marcca'=>['requier', 'string', 'max:100'],
+            'modelo'=>['required', 'string', 'max:100'],
             'precio'=>['required'],
+            'detalle'=>['required', 'string', 'max:255'],
         ]);
 
         $tennis = new Calzado();
+        $tennis->marca = $request->marca;
         $tennis->modelo = $request->modelo;
         $tennis->precio = $request->precio;
+        $tennis->detalle = $request->detalle;
         $tennis->save();
 
         return redirect('/tennis');
@@ -66,11 +70,15 @@ class CalzadoController extends Controller
     public function update(Request $request, Calzado $calzado)
     {
         $request->validate([
-            'modelo'=>['required', 'string', 'max:255'],
+            'marcca'=>['requier', 'string', 'max:100'],
+            'modelo'=>['required', 'string', 'max:100'],
             'precio'=>['required'],
+            'detalle'=>['required', 'string', 'max:255'],
         ]);
+        $calzado->marca=$request->marca;
         $calzado->modelo=$request->modelo;
         $calzado->precio=$request->precio;
+        $calzado->detalle=$request->detalle;
         $calzado->save();
         return redirect()->route('tennis.show', $calzado);
     }

@@ -1,25 +1,52 @@
 <x-layout>
         <x-slot:tittle>Editar Tennis</x-slot:tittle>
-        <form action="{{ route('tennis.update', $calzado)}}" method="POST">
-        @csrf
-        @method('PATCH')
-            <label for="modelo">Modelo<input type="text", name="modelo" id="modelo" value="{{old('modelo') ?? $calzado->modelo}}">
-            <br>
-            @error('modelo')
-                <h5>{{ $message }}</h5>
-            @enderror
-            <br>
-            </label>
-            <label for="precio">Precio
-                <input type="text" name="precio" id="precio" value="{{old('precio') ?? $calzado->precio}}">
+        <div class="formularioCreate">
+            <form class="w-full max-w-sm px-4 py-6 space-y-6 bg-white rounded-md dark:bg-darker" action="{{ route('tennis.update', $calzado)}}" method="POST">
+                @csrf
+                @method('PATCH')
+                <label for="marca">Marca<input type="text", name="marca" id="marca"
+                    class="w-full px-4 py-2 border rounded-md dark:bg-darker dark:border-gray-700 focus:outline-none focus:ring focus:ring-primary dark:focus:ring-primary-darker"
+                    value="{{old('marca') ?? $calzado->marca}}">
+                    <br>
+                    @error('marca')
+                        <h5>{{ $message }}</h5>
+                    @enderror
+                    <br>
+                </label>
+                <label for="modelo">Modelo<input type="text" name="modelo" id="modelo" value="{{old('modelo') ?? $calzado->modelo}}"
+                    class="w-full px-4 py-2 border rounded-md dark:bg-darker dark:border-gray-700 focus:outline-none focus:ring focus:ring-primary dark:focus:ring-primary-darker">
                 <br>
-            @error('precio')
-                <h5>{{ $message }}</h5>
-            @enderror
-            <br>
-            </label>
-            <label>
-                <button type="submit" value="Enviar">ENVIAR</button>
-            </label>
-        </form>
+                @error('modelo')
+                    <h5>{{ $message }}</h5>
+                @enderror
+                <br>
+                </label>
+                <label for="precio">Precio
+                    <input type="text" name="precio" id="precio" value="{{old('precio') ?? $calzado->precio}}"
+                    class="w-full px-4 py-2 border rounded-md dark:bg-darker dark:border-gray-700 focus:outline-none focus:ring focus:ring-primary dark:focus:ring-primary-darker">
+                    <br>
+                @error('precio')
+                    <h5>{{ $message }}</h5>
+                @enderror
+                <br>
+                </label>
+                <label for="detalle">Modelo
+                    <textarea rows="5" cols="50" type="text"
+                                name="detalle" id="detalle"
+                                value="{{old('detalle')}}"
+                                class="w-full px-4 py-2 border rounded-md dark:bg-darker dark:border-gray-700 focus:outline-none focus:ring focus:ring-primary-100 dark:focus:ring-primary-darker">
+                        {{old('detalle') ?? $calzado->detalle}}
+                    </textarea>
+                    <br>
+                    @error('detalle')
+                        <h5>{{ $message }}</h5>
+                    @enderror
+                    <br>
+                    </label>
+                <label>
+                    <button class="w-full px-4 py-2 font-medium text-center text-white transition-colors duration-200 rounded-md bg-[#1C9CEA] hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1"
+                    type="submit" value="Enviar">ENVIAR</button>
+                </label>
+            </form>
+        </div>
 </x-layout>

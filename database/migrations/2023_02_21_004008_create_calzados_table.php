@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('calzados', function (Blueprint $table) {
             $table->id();
+            $table->string('marca');
             $table->string('modelo');
             $table->float('precio');
+            $table->string('detalle');
             $table->timestamps();
         });
     }
