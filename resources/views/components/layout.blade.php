@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
   </head>
@@ -60,6 +61,9 @@
               </a>
               <a href="/tennis" class="inline-flex text-bold p-2 transition-colors duration-200 rounded-full text-1xl  text-primary-dark hover:text-white hover:bg-primary-dark dark:text-light">
                 Lista de calzado
+              </a>
+              <a href="{{ route('admin.users.index') }}" class="inline-flex text-bold p-2 transition-colors duration-200 rounded-full text-1xl  text-primary-dark hover:text-white hover:bg-primary-dark dark:text-light">
+                Usuarios
               </a>
               </nav>
               <!-- Mobile sub menu button -->

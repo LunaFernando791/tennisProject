@@ -21,6 +21,7 @@ class CalzadoFactory extends Factory
             'modelo'=>$this->faker->word(),
             'precio'=>$this->faker->numberBetween(0,2000),
             'detalle'=>$this->faker->text(),
+            'imagen'=>$this->faker->imageUrl(),
         ];
     }
 }

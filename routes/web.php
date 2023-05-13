@@ -1,9 +1,8 @@
 <?php
 
 use App\Http\Controllers\CalzadoController;
-use App\Models\AdminUser;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Admin\UserController;
 
 use Illuminate\Support\Facades\Mail;
 /*
@@ -20,7 +19,7 @@ use Illuminate\Support\Facades\Mail;
 Route::get('/', function () {
     return view('home');
 })->name('home'); //Ruta para la página principal
-
+Route::resource('users', UserController::class)->names('admin.users');
 Route::resource('tennis', CalzadoController::class)->parameters([
     'tennis'=>'calzado'
 ]);
