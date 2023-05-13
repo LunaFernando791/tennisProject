@@ -133,7 +133,9 @@ pre {
   font-size: 1em;
   /* 2 */
 }
-
+.font-custom{
+    font-family: "Montserrat";
+}
 /*
 Add the correct font size in all browsers.
 */

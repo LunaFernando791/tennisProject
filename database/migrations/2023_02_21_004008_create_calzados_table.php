@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('modelo');
             $table->float('precio');
             $table->string('detalle');
+            $table->string('imagen');
             $table->timestamps();
         });
     }

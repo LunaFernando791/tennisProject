@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\CalzadoController;
+use App\Models\AdminUser;
 use Illuminate\Support\Facades\Route;
 
+
+use Illuminate\Support\Facades\Mail;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,13 +18,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('home');
+})->name('home'); //Ruta para la página principal
 
 Route::resource('tennis', CalzadoController::class)->parameters([
     'tennis'=>'calzado'
 ]);
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

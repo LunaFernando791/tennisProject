@@ -2,21 +2,19 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
     <title>{{ $tittle }}</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" href="/css/tailwind.css" />
+    <link rel="stylesheet" href="/css/tailwind2.css" />
     <link rel="stylesheet" href="/css/styles.css"/>
-    <script src="https://cdn.jsdelivr.net/gh/alpine-collective/alpine-magic-helpers@0.5.x/dist/component.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.min.js" defer></script>
+    <link rel="stylesheet" href="tailwind.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
   </head>
-  <body>
+  <body class="font-custom text-20">
     <div x-data="setup()" x-init="$refs.loading.classList.add('hidden'); setColors(color);" :class="{ 'dark': isDark}">
       <div class="flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light">
         <!-- Loading screen -->
@@ -55,12 +53,12 @@
                 href="#"
                 class="inline-block text-2xl font-bold tracking-wider uppercase text-primary-dark dark:text-light"
               >
-                ZHOPSHOEZ
+                Step Up Style
               </a>
-              <a href="/dashboard" class="inline-flex text-bold text-1xl  text-primary-dark dark:text-light">
-                Dashboard
+              <a href="{{ route('home') }}" class="inline-flex text-bold text-1xl p-2 transition-colors duration-200 rounded-full text-primary-dark hover:text-white hover:bg-primary-dark dark:text-light">
+                Home
               </a>
-              <a href="/tennis" class="inline-flex text-bold text-1xl  text-primary-dark dark:text-light">
+              <a href="/tennis" class="inline-flex text-bold p-2 transition-colors duration-200 rounded-full text-1xl  text-primary-dark hover:text-white hover:bg-primary-dark dark:text-light">
                 Lista de calzado
               </a>
               </nav>
@@ -93,7 +91,7 @@
                 <!-- Notification button -->
                 <button
                   @click="openNotificationsPanel"
-                  class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker"
+                  class="p-2 transition-colors duration-200 rounded-full text-primary-dark hover:text-white hover:bg-primary-dark dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-dark dark:focus:bg-primary-dark focus:ring-primary-darker"
                 >
                   <span class="sr-only">Open Notification panel</span>
                   <svg
@@ -115,7 +113,7 @@
                 <!-- Search button -->
                 <button
                   @click="openSearchPanel"
-                  class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker"
+                  class="p-2 transition-colors duration-200 rounded-full text-primary-dark hover:text-white hover:bg-primary-dark dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-dark dark:focus:bg-primary-dark focus:ring-primary-darker"
                 >
                   <span class="sr-only">Open search panel</span>
                   <svg
@@ -138,7 +136,7 @@
                 <!-- Settings button -->
                 <button
                   @click="openSettingsPanel"
-                  class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker"
+                  class="p-2 transition-colors duration-200 rounded-full text-primary-dark hover:text-white hover:bg-primary-dark dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-dark dark:focus:bg-primary-dark focus:ring-primary-darker"
                 >
                   <span class="sr-only">Open settings panel</span>
                   <svg
@@ -165,7 +163,7 @@
                 </button>
 
                 <!-- User avatar button -->
-                <div class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker">
+                <div class="p-2 transition-colors duration-200 rounded-full text-primary-dark  hover:text-primary-dark  dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker">
                     @if (Route::has('login'))
                         @auth
                         <div class="ml-2 relative">
@@ -177,7 +175,7 @@
                                         </button>
                                     @else
                                         <span class="inline-flex rounded-md">
-                                            <button type="button" class="text-sm px-4 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker">
+                                            <button type="button" class="text-lg p-2 transition-colors duration-200 rounded-full text-primary-dark hover:bg-primary-dark hover:text-white hover:br-primary-dark dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none  dark:focus:bg-primary-dark focus:ring-primary-darker">
                                                 {{ Auth::user()->name }}
                                             </button>
                                         </span>
@@ -213,9 +211,9 @@
                             </x-dropdown>
                         </div>
                         @else
-                            <a href="{{ route('login') }}" class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker">Login in</a>
+                            <a href="{{ route('login') }}" class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-dark hover:text-white hover:bg-primary-dark dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker">Login in</a>
                             @if(Route::has('register'))
-                                <a href="{{ route('register') }}" class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker">Register</a>
+                                <a href="{{ route('register') }}" class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-dark hover:text-white hover:bg-primary-dark dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker">Register</a>
                             @endif
                         @endauth
                     @endif
@@ -239,7 +237,7 @@
                   <!-- Notification button -->
                   <button
                     @click="openNotificationsPanel(); $nextTick(() => { isMobileSubMenuOpen = false })"
-                    class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker"
+                    class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-white hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker"
                   >
                     <span class="sr-only">Open notifications panel</span>
                     <svg
