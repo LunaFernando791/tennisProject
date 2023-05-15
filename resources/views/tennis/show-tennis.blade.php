@@ -2,7 +2,7 @@
     <x-slot:tittle>Detalle del producto</x-slot:tittle>
     <div class= "bg-white shadow rounded-lg m-4 ml-20">
         <div class="px-4 py-6 sm:px-6">
-            <h3 class="text-xl font-semibold leading-6 text-gray-900">{{ $calzado->marca }}</h3>
+            <h3 class="text-xl font-semibold leading-6 text-gray-900">{{ $calzado->marca->name }}</h3>
             <p class="mt-1 max-w-2xl text-sm text-gray-500"> {{$calzado->modelo}}</p>
         </div>
         <div class="border-t border-gray-200">
@@ -53,6 +53,6 @@ if (result.isConfirmed) {
 </script>
 @if(session('editado')=='ok')
 <script>
-    Swal.fire('Saved!', '', 'success')
+    Swal.fire('Guardado correctamente!', '', 'success')
 </script>
 @endif

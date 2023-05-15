@@ -10,7 +10,7 @@
         <div class="w-3/5 bg-gray-200 rounded-tl-lg rounded-tr-lg flex justify-center border p-4">
             <input placeholder="¿Que calzado buscas?" class="bg-white w-full items-center p-2">
         </div>
-        <div class="w-full flex justify-center p-0">
+        <div class="w-full flex justify-center p-0 mb-2">
             <table class="w-3/5 text-center border">
                 <thead class="bg-gray-200 rounded-tl-lg">
                     <tr>

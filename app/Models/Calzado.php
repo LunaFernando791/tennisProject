@@ -9,6 +9,9 @@ class Calzado extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    public function marca(){
+        return $this->belongsTo(Marca::class);
+    }
     public function getModeloAttribute($value)
     {
         //Usa un accessors para presentar el nombre del modelo en mayúsculas.

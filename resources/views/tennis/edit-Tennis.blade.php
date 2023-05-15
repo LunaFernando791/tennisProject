@@ -4,11 +4,16 @@
         <form class="w-full max-w-sm px-4 py-6 space-y-6 bg-white rounded-md dark:bg-darker" action="{{ route('tennis.update', $calzado)}}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
-            <label for="marca">Marca<input type="text", name="marca" id="marca"
-                class="w-full px-4 py-2 border rounded-md dark:bg-darker dark:border-gray-700 focus:outline-none focus:ring focus:ring-primary dark:focus:ring-primary-darker"
-                value="{{old('marca') ?? $calzado->marca}}">
+            <label for="marca_id">Marca
+                <select name="marca_id" id="marca_id" class="w-full px-4 py-2 border rounded-md dark:bg-darker dark:border-gray-700 focus:outline-none focus:ring focus:ring-primary dark:focus:ring-primary-darker">
+                    @foreach ($marcas as $marca)
+                        <option value="{{ $marca->id }}" {{ old('marca_id' ?? $calzado->marca->id == $marca->id ? 'selected' : '') }}>
+                            {{ $marca->name }}
+                        </option>
+                    @endforeach
+                </select>
                 <br>
-                @error('marca')
+                @error('marca_id')
                     <h5>{{ $message }}</h5>
                 @enderror
                 <br>

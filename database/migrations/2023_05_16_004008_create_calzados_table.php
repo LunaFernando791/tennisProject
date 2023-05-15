@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('calzados', function (Blueprint $table) {
             $table->id();
-            $table->string('marca');
+            $table->foreignId('marca_id')->constrained();
             $table->string('modelo');
             $table->float('precio');
             $table->string('detalle');

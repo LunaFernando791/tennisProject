@@ -17,7 +17,7 @@ class CalzadoFactory extends Factory
     public function definition():array
     {
         return [
-            'marca'=>$this->faker->word(),
+            'marca_id'=>$this->faker->numberBetween(0,10),
             'modelo'=>$this->faker->word(),
             'precio'=>$this->faker->numberBetween(0,2000),
             'detalle'=>$this->faker->text(),

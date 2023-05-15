@@ -2,31 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Marca;
 use App\Models\Calzado;
 use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\SoftDeletes;
 class CalzadoController extends Controller
 {
+    use SoftDeletes;
     public function __construct()
     {
-        $this->middleware('auth')->except('index', 'show', 'getCalzado');
+        $this->middleware('auth')->except('index', 'show');
     }
     public function index()
     {
         $tennis = Calzado::all();
         return view('tennis.indexTennis', compact('tennis'));
     }
-    public function create()
+    public function create(Marca $marcas)
     {
-        return view('tennis.createTennis');
+        $marcas=Marca::all();
+        return view('tennis.createTennis', compact('marcas'));
     }
     public function store(Request $request)
     {
         $request->validate([
-            'marcca'=>['requier', 'string', 'max:100'],
             'modelo'=>['required', 'string', 'max:100'],
             'precio'=>['required'],
             'detalle'=>['required', 'string', 'max:255'],
@@ -34,7 +37,7 @@ class CalzadoController extends Controller
         ]);
 
         $tennis = new Calzado();
-        $tennis->marca = $request->marca;
+        $tennis->marca->id = $request->marca->id;
         $tennis->modelo = $request->modelo;
         $tennis->precio = $request->precio;
         $tennis->detalle = $request->detalle;
@@ -45,7 +48,6 @@ class CalzadoController extends Controller
             $tennis->imagen=$nombreImagen;
         }
         $tennis->save();
-
         return redirect('/tennis')->with('creado','ok');
     }
     public function show(Calzado $calzado)
@@ -53,20 +55,20 @@ class CalzadoController extends Controller
         $rutaImagen=$calzado->imagen;
         return view('tennis/show-tennis', compact('calzado', 'rutaImagen')); //
     }
-    public function edit(Calzado $calzado) //se trata de mostrar un formulario que ya tengo en la base de datos y la quiero modificar, tenemos que ver las rutas y como estan armadas
+    public function edit(Calzado $calzado, Marca $marcas) //se trata de mostrar un formulario que ya tengo en la base de datos y la quiero modificar, tenemos que ver las rutas y como estan armadas
     {
-        return view('tennis/edit-Tennis', compact('calzado'));//en los inputs se podemos agergar un value, en el value le ponemos la inforacion que estamos recuperando del elemento que estamos editando.
+        $marcas=Marca::all();
+        return view('tennis/edit-Tennis', compact('calzado', 'marcas'));//en los inputs se podemos agergar un value, en el value le ponemos la inforacion que estamos recuperando del elemento que estamos editando.
     }
     public function update(Request $request, Calzado $calzado)
     {
         $request->validate([
-            'marcca'=>['requier', 'string', 'max:100'],
             'modelo'=>['required', 'string', 'max:100'],
             'precio'=>['required'],
             'detalle'=>['required', 'string', 'max:255'],
             'imagen' => ['required', 'file'],
         ]);
-        $calzado->marca=$request->marca;
+        $calzado->marca_id=$request->input('marca_id');
         $calzado->modelo=$request->modelo;
         $calzado->precio=$request->precio;
         $calzado->detalle=$request->detalle;

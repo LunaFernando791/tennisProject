@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 class UserController extends Controller
 {
     /**
@@ -15,52 +16,18 @@ class UserController extends Controller
         $users=User::all();
         return view('admin.users.indexUsers', compact('users'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function edit(User $user)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        $roles=Role::all();
+        return view('admin.users.editUser', compact('user', 'roles'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $user->roles()->sync($request->role_id);
+        return redirect()->route('admin.users.edit', $user)->with('rolAsignado', 'ok');
     }
 }
