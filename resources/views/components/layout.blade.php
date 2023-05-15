@@ -62,9 +62,11 @@
               <a href="/tennis" class="inline-flex text-bold p-2 transition-colors duration-200 rounded-full text-1xl  text-primary-dark hover:text-white hover:bg-primary-dark dark:text-light">
                 Lista de calzado
               </a>
-              <a href="{{ route('admin.users.index') }}" class="inline-flex text-bold p-2 transition-colors duration-200 rounded-full text-1xl  text-primary-dark hover:text-white hover:bg-primary-dark dark:text-light">
-                Usuarios
-              </a>
+              @can('Admin', App\Models\User::class)
+                <a href="{{ route('admin.users.index') }}" class="inline-flex text-bold p-2 transition-colors duration-200 rounded-full text-1xl  text-primary-dark hover:text-white hover:bg-primary-dark dark:text-light">
+                    Usuarios
+                </a>
+              @endcan
               </nav>
               <!-- Mobile sub menu button -->
               <button
@@ -453,6 +455,7 @@
             <main>
               <h1 class="title">{{ $tittle }}</h1>
               {{ $slot }}
+              @yield('content')
             </main>
           </div>
         </div>

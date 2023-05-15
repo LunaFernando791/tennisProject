@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Providers;
-
+use App\Models\User;
+use App\Policies\CalzadoPolicy;
 use App\Models\Team;
 use App\Policies\TeamPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-
+use Illuminate\Support\Facades\Gate;
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -23,7 +24,6 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPolicies();
-
-        //
+        Gate::policy(User::class, CalzadoPolicy::class);
     }
 }

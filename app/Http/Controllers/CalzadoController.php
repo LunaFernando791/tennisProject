@@ -8,16 +8,11 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
-
 class CalzadoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function __construct()
     {
-
-        $this->middleware('auth')->except('index', 'show');
+        $this->middleware('auth')->except('index', 'show', 'getCalzado');
     }
     public function index()
     {
@@ -90,5 +85,9 @@ class CalzadoController extends Controller
         Storage::delete('public/'.$calzado->imagen); //Elimina la imagen del storage.
         $calzado->delete();
         return redirect()->route('tennis.index')->with('eliminar', 'ok'); //retorna las variables de session
+    }
+    public function getCalzado(){
+        $calzado=Calzado::orderBy('modelo', 'asc')->get(); //Se realiza la consulta de manera ordenada a traves del modelo del calzado.
+        return response()->json($calzado); //Envía el JSON ordenado.
     }                                                                               //para mostrar el mensaje de exito.
 }

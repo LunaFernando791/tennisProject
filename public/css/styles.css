@@ -39,33 +39,10 @@ body {
     padding: 5px;
 }
 
-table {
-	width: 800px;
-	border-collapse: collapse;
-	overflow: hidden;
-    border-radius: 10px;
-    border: none;
-    min-width: 400;
-    padding: 10px;
-    margin-bottom: 30px;
-}
-.header{
-    background-color: #D6DBDF;
-    color: #189EC6;
-}
 .detail{
     padding-left: 100px;
 }
-th,
-td {
-	padding: 15px;
-    margin:10px;
-	background-color: rgba(255,255,255,0.2);
-}
-tr{
-    text-align: center;
-    justify-content: center;
-}
+
 .formularioCreate{
     display: flex;
     justify-content: center;

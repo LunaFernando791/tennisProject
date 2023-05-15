@@ -12,7 +12,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users=User::paginate(10)->withPath('users')->onEachSide(1);
+        $users=User::all();
         return view('admin.users.indexUsers', compact('users'));
     }
 
