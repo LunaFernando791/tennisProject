@@ -17,11 +17,11 @@
                     @foreach ( $marcas as $marca)
                         <tr class="user-item {{ $loop->iteration % 2 == 0 ? 'bg-white-200 ' : 'bg-gray-100' }}">
                             <td class="p-2">{{$marca->id}}</td>
-                            <td class="p-2">{{$marca>name}}</td>
-                            <!--<td class="p-2"><a href="/users/{{$user->id}}/edit"><span class="transition duration-300 ease-in-out material-symbols-rounded hover:bg-primary rounded-lg p-2">
+                            <td class="p-2">{{$marca->name}}</td>
+                            <td class="p-2"><a href="/users/{{$marca->id}}/edit"><span class="transition duration-300 ease-in-out material-symbols-rounded hover:bg-primary rounded-lg p-2">
                                 edit
                                 </span> </a>
-                            </td>-->
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

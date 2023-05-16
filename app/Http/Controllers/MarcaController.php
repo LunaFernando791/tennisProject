@@ -7,34 +7,32 @@ use Illuminate\Http\Request;
 
 class MarcaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $marcas=Marca::all();
         return view('admin.marcas.indexMarcas', compact('marcas'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.marcas.createMarcas');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'=>['required', 'string', 'max:100'],
+            'imagen' => ['required', 'file'],
+        ]);
+        $marca=new Marca();
+        $marca->name=$request->name;
+        if($request->hasFile('imagen')){
+            $imagen=$request->file(('imagen'));
+            $nombreImagen=time().'_'.$imagen->getClientOriginalName();
+            $imagen->storeAs('public', $nombreImagen);
+            $marca->imagen=$nombreImagen;
+        }
+        $marca->save();
+        return redirect('/marcas')->with('creado','ok');
     }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Marca $marca)
     {
         //

@@ -8,7 +8,7 @@
         <div class="border-t border-gray-200">
             <div class="flex items-center justify-between bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 flex-wrap">
                 <div class="mt-4">
-                <img class="rounded-lg h-64 p-0 m-1 items-center" src="{{ asset('storage/app/public/'.$rutaImagen) }}" alt="{{ $calzado->modelo }}">
+                <img class="rounded-lg h-64 p-0 m-1 items-center" src="{{ asset('storage/'.$rutaImagen) }}" alt="{{ $calzado->modelo }}">
                 </div>
                 <div class="mt-4">
                     <dl>
@@ -29,27 +29,26 @@
             </form>
         </div>
     </div>
-
 </x-layout>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-document.querySelector('.formulario-eliminar').addEventListener('submit', function(e) {
-    e.preventDefault();
-Swal.fire({
-title: 'Estas seguro?',
-text: "Esta imagen se eliminara definitivamente",
-icon: 'warning',
-showCancelButton: true,
-confirmButtonColor: '#3085d6',
-cancelButtonColor: '#d33',
-confirmButtonText: 'Si, eliminar definitivamente!',
-cancelButtonText: 'Cancelar',
-}).then((result) => {
-if (result.isConfirmed) {
-    this.submit();
-}
-})
-})
+    document.querySelector('.formulario-eliminar').addEventListener('submit', function(e) {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Estas seguro?',
+            text: "Esta imagen se eliminara definitivamente",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, eliminar definitivamente!',
+            cancelButtonText: 'Cancelar',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.submit();
+            }
+        })
+    })
 </script>
 @if(session('editado')=='ok')
 <script>

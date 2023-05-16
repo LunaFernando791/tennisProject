@@ -37,7 +37,7 @@ class CalzadoController extends Controller
         ]);
 
         $tennis = new Calzado();
-        $tennis->marca->id = $request->marca->id;
+        $tennis->marca_id = $request->marca_id;
         $tennis->modelo = $request->modelo;
         $tennis->precio = $request->precio;
         $tennis->detalle = $request->detalle;
@@ -91,5 +91,11 @@ class CalzadoController extends Controller
     public function getCalzado(){
         $calzado=Calzado::orderBy('modelo', 'asc')->get(); //Se realiza la consulta de manera ordenada a traves del modelo del calzado.
         return response()->json($calzado); //Envía el JSON ordenado.
-    }                                                                               //para mostrar el mensaje de exito.
+    }
+    public function marca($marca_id) //Filtra la consulta de calzado por marcas
+    {
+        $marca = Marca::findOrFail($marca_id);
+        $calzados = $marca->calzados()->get();
+        return view('tennis.marca', compact('calzados'));
+    }
 }
