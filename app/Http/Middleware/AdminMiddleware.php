@@ -14,9 +14,9 @@ class AdminMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
-    {
-        if($request->user() && $request->user()->hasRole('Admin'))
+    public function handle(Request $request, Closure $next): Response //Permite el acceso a ciertas solicitudes
+    {                                                               //dentro de la página. Si no, se le redirije
+        if($request->user() && $request->user()->hasRole('Admin')) //con un mensaje de error.
         {
             return $next($request);
         }

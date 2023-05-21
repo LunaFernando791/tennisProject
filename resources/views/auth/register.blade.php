@@ -47,7 +47,7 @@
             @endif
 
             <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
+                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
                     {{ __('Already registered?') }}
                 </a>
 
@@ -56,5 +56,13 @@
                 </x-button>
             </div>
         </form>
+        <div class="flex m-2 items-center justify-center">
+            <a href="/login-google">
+                <x-button>
+                        <img src="images/icons8-google.svg" class="w-4 h-4 mx-2" alt="">
+                        {{ __(' O registrate con Google') }}
+                </x-button>
+            </a>
+        </div>
     </x-authentication-card>
 </x-guest-layout>

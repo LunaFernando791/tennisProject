@@ -33,32 +33,4 @@ class MarcaController extends Controller
         $marca->save();
         return redirect('/marcas')->with('creado','ok');
     }
-    public function show(Marca $marca)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Marca $marca)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Marca $marca)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Marca $marca)
-    {
-        //
-    }
 }

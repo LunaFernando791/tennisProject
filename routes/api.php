@@ -13,7 +13,7 @@ use App\Http\Controllers\CalzadoController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::get('calzado', [CalzadoController::class, 'getCalzado'])->middleware('admin');
+Route::get('calzado', [CalzadoController::class, 'getCalzado'])->middleware('admin');  //Ruta hacia el JSON.
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

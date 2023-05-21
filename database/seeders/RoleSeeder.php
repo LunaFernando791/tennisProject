@@ -21,8 +21,5 @@ class RoleSeeder extends Seeder
         Permission::create(['name'=>'tennis.create'])->syncRoles([$role1, $role2]);;
         Permission::create(['name'=>'tennis.edit'])->syncRoles([$role1, $role2]);;
         Permission::create(['name'=>'tennis.destroy'])->syncRoles([$role1, $role2]);;
-
-
-
     }
 }

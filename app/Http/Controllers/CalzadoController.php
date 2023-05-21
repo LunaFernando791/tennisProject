@@ -53,7 +53,8 @@ class CalzadoController extends Controller
     public function show(Calzado $calzado)
     {
         $rutaImagen=$calzado->imagen;
-        return view('tennis/show-tennis', compact('calzado', 'rutaImagen')); //
+        $isFavorite=$calzado->isFavorite();
+        return view('tennis/show-tennis', compact('calzado', 'rutaImagen', 'isFavorite')); //
     }
     public function edit(Calzado $calzado, Marca $marcas) //se trata de mostrar un formulario que ya tengo en la base de datos y la quiero modificar, tenemos que ver las rutas y como estan armadas
     {
@@ -92,7 +93,7 @@ class CalzadoController extends Controller
         $calzado=Calzado::orderBy('modelo', 'asc')->get(); //Se realiza la consulta de manera ordenada a traves del modelo del calzado.
         return response()->json($calzado); //Envía el JSON ordenado.
     }
-    public function marca($marca_id) //Filtra la consulta de calzado por marcas
+    public function marca($marca_id) //Filtra la consulta de calzado por marcas.
     {
         $marca = Marca::findOrFail($marca_id);
         $calzados = $marca->calzados()->get();

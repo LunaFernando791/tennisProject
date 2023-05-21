@@ -7,7 +7,7 @@
         <x-validation-errors class="mb-4" />
 
         @if (session('status'))
-            <div class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
+            <div class="mb-4 font-medium text-sm text-green-600">
                 {{ session('status') }}
             </div>
         @endif
@@ -34,7 +34,7 @@
 
             <div class="flex items-center justify-end mt-4">
                 @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
+                    <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
                         {{ __('Forgot your password?') }}
                     </a>
                 @endif
@@ -44,5 +44,13 @@
                 </x-button>
             </div>
         </form>
+        <div class="flex m-2 items-center justify-center">
+            <a href="/login-google">
+                <x-button>
+                        <img src="images/icons8-google.svg" class="w-4 h-4 mx-2" alt="">
+                        {{ __(' O inicia sesión con Google') }}
+                </x-button>
+            </a>
+        </div>
     </x-authentication-card>
 </x-guest-layout>

@@ -6,6 +6,7 @@
                 <p class="text-blue-600 text-lg font-bold ">Nombre:</p>
                 <p class="border p-2 text-sm rounded">{{ $user->name }}</p>
                 <form action="{{ route('admin.users.update', $user)}}" method="POST" class="text-sm ">
+                    {{ dd($user) }}
                     @csrf
                     @method('PUT')
                     @foreach ($roles as $role )
